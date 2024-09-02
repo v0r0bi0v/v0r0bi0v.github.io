@@ -1,1 +1,51 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeX Compiler</title>
+</head>
+<body>
+    <h1>Upload your .tex file</h1>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" accept=".tex">
+        <button type="submit">Compile</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const file = document.getElementById('fileInput').files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch('https://193.108.54.176/compile', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'output.pdf';
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.getElementById('result').innerText = 'Compilation successful! Downloading...';
+                    } else {
+                        const error = await response.json();
+                        document.getElementById('result').innerText = `Error: ${error.error}`;
+                    }
+                } catch (error) {
+                    document.getElementById('result').innerText = `Error: ${error.message}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
