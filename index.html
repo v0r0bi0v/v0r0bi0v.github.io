@@ -22,7 +22,7 @@
                 formData.append('file', file);
 
                 try {
-                    const response = await fetch('https://193.108.54.176/compile', {
+                    const response = await fetch('https://193.108.54.176:5000/compile', {
                         method: 'POST',
                         body: formData
                     });
