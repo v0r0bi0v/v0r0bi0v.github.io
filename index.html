@@ -22,7 +22,7 @@
                 formData.append('file', file);
 
                 try {
-                    const response = await fetch('http://193.108.54.176/compile', {
+                    const response = await fetch('http://193.108.54.176:5000/compile', {
                         method: 'POST',
                         body: formData
                     });
@@ -43,6 +43,8 @@
                 } catch (error) {
                     document.getElementById('result').innerText = `Error: ${error.message}`;
                 }
+            } else {
+                document.getElementById('result').innerText = 'No file selected.';
             }
         });
     </script>
