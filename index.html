@@ -42,7 +42,7 @@
                         document.getElementById('result').innerText = `Error: ${error.error}`;
                     }
                 } catch (error) {
-                    document.getElementById('result').innerText = `Error2: ${error.message}`;
+                    document.getElementById('result').innerText += `Error2: ${error.message}`;
                 }
             } else {
                 document.getElementById('result').innerText = 'No file selected.';
